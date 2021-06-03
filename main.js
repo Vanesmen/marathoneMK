@@ -1,10 +1,10 @@
 class Player {
-    constructor(characterDate) {
-        this.divClass = characterDate.divClass;
-        this.name = characterDate.name;
-        this.hp = characterDate.hp;
-        this.img = characterDate.img;
-        this.weapon = characterDate.weapon;
+    constructor(characterData) {
+        this.divClass = characterData.divClass;
+        this.name = characterData.name;
+        this.hp = characterData.hp;
+        this.img = characterData.img;
+        this.weapon = characterData.weapon;
 
         this.playerContainer = document.querySelector(".arenas");
     }
@@ -13,7 +13,7 @@ class Player {
         console.log(`${this.name} Fight...`)
     }
 
-    createPlayer = () => {
+    createPlayer() {
         const $player = document.createElement("div");
         $player.classList.add(this.divClass);
 
@@ -46,7 +46,7 @@ class Player {
     }
 }
 
-let scorpionDate = {
+let scorpionData = {
     divClass: "player1",
     name: "SCORPION",
     hp: 55,
@@ -54,7 +54,7 @@ let scorpionDate = {
     weapon: ["HOOK"]
 }
 
-let subzeroDate = {
+let subzeroData = {
     divClass: "player2",
     name: "SUB-ZERO",
     hp: 70,
@@ -62,8 +62,8 @@ let subzeroDate = {
     weapon: ["SWORD"]
 }
 
-let scorpion = new Player(scorpionDate);
-let subzero = new Player(subzeroDate);
+let scorpion = new Player(scorpionData);
+let subzero = new Player(subzeroData);
 
 scorpion.createPlayer();
 subzero.createPlayer();
