@@ -1,12 +1,20 @@
+const createElement = (tag, className) => {
+    const $tag = document.createElement(tag);
+    if (className) {
+        $tag.classList.add(className);
+    }
+
+    return $tag;
+}
+
+
 class Player {
     constructor(characterData) {
-        this.divClass = characterData.divClass;
+        this.player = characterData.player;
         this.name = characterData.name;
         this.hp = characterData.hp;
         this.img = characterData.img;
         this.weapon = characterData.weapon;
-
-        this.playerContainer = document.querySelector(".arenas");
     }
 
     attack() {
@@ -14,24 +22,19 @@ class Player {
     }
 
     createPlayer() {
-        const $player = document.createElement("div");
-        $player.classList.add(this.divClass);
+        const $player = createElement("div", `player${this.player}`);
 
-        const $progressbar = document.createElement("div");
-        $progressbar.classList.add("progressbar");
+        const $progressbar = createElement("div", "progressbar");
 
-        const $life = document.createElement("div");
-        $life.classList.add("life");
+        const $life = createElement("div", "life");
         $life.style.width = `${this.hp}%`;
 
-        const $name = document.createElement("div");
-        $name.classList.add("name");
+        const $name = createElement("div", "name");
         $name.innerText = this.name;
 
-        const $character = document.createElement("div");
-        $character.classList.add("character");
+        const $character = createElement("div", "character");
 
-        const $img = document.createElement("img");
+        const $img = createElement("img", "character");
         $img.src = this.img;
 
         $progressbar.appendChild($life);
@@ -42,32 +45,84 @@ class Player {
         $player.appendChild($progressbar);
         $player.appendChild($character);
 
-        this.playerContainer.appendChild($player);
+        return $player;
+    }
+}
+
+class Game {
+    constructor(player1Data, player2Data) {
+        this.$playersContainer = document.querySelector(".arenas");
+        this.$randomButton = document.querySelector(".button");
+
+        this.player1 = new Player(player1Data);
+        this.player2 = new Player(player2Data);
+
+        this.init();
+    }
+
+    changeHP(player) {
+        const $playerLife = document.querySelector(`.player${player.player} .life`);
+        player.hp -= Math.floor(Math.random() * 20);
+        player.hp <= 0 ?
+            $playerLife.style.width = `0%` :
+            $playerLife.style.width = `${player.hp}%`;
+
+    }
+
+    playerWin(name) {
+        const $loseTittle = createElement("div", "loseTitle");
+        $loseTittle.innerText = `${name} win!`;
+
+        return $loseTittle;
+    }
+
+    $randomButtonAction() {
+        this.$randomButton.addEventListener("click", () => {
+            console.log("####: Click Random Button");
+
+            this.changeHP(this.player1);
+            this.changeHP(this.player2);
+
+            if (this.player1.hp <= 0 || this.player2.hp <= 0) {
+                this.$randomButton.disabled = true;
+
+                this.player1.hp <= 0 ?
+                    this.$playersContainer.appendChild(this.playerWin(this.player2.name)) :
+                    this.$playersContainer.appendChild(this.playerWin(this.player1.name));
+            }
+
+        })
+    }
+
+    init() {
+        this.$playersContainer.appendChild(this.player1.createPlayer());
+        this.$playersContainer.appendChild(this.player2.createPlayer());
+
+        this.$randomButtonAction();
+
+        this.player1.attack();
+        this.player2.attack();
     }
 }
 
 let scorpionData = {
-    divClass: "player1",
+    player: 1,
     name: "SCORPION",
-    hp: 55,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
     weapon: ["HOOK"]
 }
 
 let subzeroData = {
-    divClass: "player2",
+    player: 2,
     name: "SUB-ZERO",
-    hp: 70,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
     weapon: ["SWORD"]
 }
 
-let scorpion = new Player(scorpionData);
-let subzero = new Player(subzeroData);
+window.onload = () => {
+    const game = new Game(scorpionData, subzeroData);
+}
 
-scorpion.createPlayer();
-subzero.createPlayer();
-
-scorpion.attack();
-subzero.attack();
 
