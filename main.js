@@ -63,10 +63,7 @@ class Game {
     changeHP(player) {
         const $playerLife = document.querySelector(`.player${player.player} .life`);
         player.hp -= Math.floor(Math.random() * 20);
-        player.hp <= 0 ?
-            $playerLife.style.width = `0%` :
-            $playerLife.style.width = `${player.hp}%`;
-
+        $playerLife.style.width = player.hp <= 0 ? `0%` : `${player.hp}%`;
     }
 
     playerWin(name) {
