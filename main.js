@@ -24,16 +24,6 @@ function renderHP() {
     $playerLife.style.width = `${this.hp}%`;
 };
 
-function createReloadButton() {
-    const reloadWrap = createElement("div", "reloadWrap");
-    const button = createElement("button", "button");
-    button.innerText = "Restart";
-
-    button.addEventListener("click", function () {
-        window.location.reload();
-    })
-};
-
 class Player {
     constructor(characterData) {
         this.player = characterData.player;
