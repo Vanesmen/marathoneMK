@@ -63,12 +63,23 @@ class Game {
     changeHP(player) {
         const $playerLife = document.querySelector(`.player${player.player} .life`);
         player.hp -= Math.floor(Math.random() * 20);
-        $playerLife.style.width = player.hp <= 0 ? `0%` : `${player.hp}%`;
+
+        if (player.hp <= 0) {
+            player.hp = 0;
+        }
+
+        $playerLife.style.width = `${player.hp}%`;
     }
 
     playerWin(name) {
         const $loseTittle = createElement("div", "loseTitle");
-        $loseTittle.innerText = `${name} win!`;
+
+        if (name) {
+            $loseTittle.innerText = `${name} win!`;
+        } else {
+            $loseTittle.innerText = `draw!`;
+        }
+
 
         return $loseTittle;
     }
@@ -82,10 +93,14 @@ class Game {
 
             if (this.player1.hp <= 0 || this.player2.hp <= 0) {
                 this.$randomButton.disabled = true;
+            }
 
-                this.player1.hp <= 0 ?
-                    this.$playersContainer.appendChild(this.playerWin(this.player2.name)) :
-                    this.$playersContainer.appendChild(this.playerWin(this.player1.name));
+            if (this.player1.hp === 0 && this.player1.hp < this.player2.hp) {
+                this.$playersContainer.appendChild(this.playerWin(this.player2.name))
+            } else if (this.player2.hp === 0 && this.player2.hp < this.player1.hp) {
+                this.$playersContainer.appendChild(this.playerWin(this.player1.name))
+            } else if (this.player2.hp === 0 && this.player2.hp === this.player1.hp) {
+                this.$playersContainer.appendChild(this.playerWin())
             }
 
         })
