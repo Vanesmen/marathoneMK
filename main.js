@@ -133,9 +133,6 @@ class Game {
                 item.checked = false;
             }
 
-            console.log("####: enemy", enemy);
-            console.log("####: attack", attack);
-
             if (attack.hit !== enemy.defence) {
                 this.player2.changeHP(attack.value);
                 this.player2.renderHP();
@@ -206,7 +203,6 @@ class Game {
         this.$playersContainer.appendChild(this.player1.createPlayer());
         this.$playersContainer.appendChild(this.player2.createPlayer());
 
-        // this.$randomButtonAction();
         this.formFightAction();
 
         this.player1.attack();
