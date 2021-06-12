@@ -8,7 +8,8 @@ function createElement(tag, className) {
 }
 
 function getRandom(max) {
-    return Math.floor(Math.random() * max);
+    const random = Math.floor(Math.random() * max);
+    return random;
 }
 
 function changeHP(hp) {
@@ -76,7 +77,7 @@ class Player {
 class Game {
     constructor(player1Data, player2Data) {
         this.$playersContainer = document.querySelector(".arenas");
-        // this.$randomButton = document.querySelector(".button");
+        this.$randomButton = document.querySelector(".button");
         this.$formFight = document.querySelector(".control");
 
         this.player1 = new Player(player1Data);
@@ -132,6 +133,9 @@ class Game {
                 item.checked = false;
             }
 
+            console.log("####: enemy", enemy);
+            console.log("####: attack", attack);
+
             if (attack.hit !== enemy.defence) {
                 this.player2.changeHP(attack.value);
                 this.player2.renderHP();
@@ -142,13 +146,15 @@ class Game {
                 this.player1.renderHP();
             }
 
-            this.endGameTrigger();
+            if (this.player1.hp <= 0 || this.player2.hp <= 0) {
+                this.endGameTrigger();
+            }
         })
     }
 
     enemyAttack() {
-        const hit = ATTACK[getRandom(3) - 1];
-        const defence = ATTACK[getRandom(3) - 1];
+        const hit = ATTACK[getRandom(2)];
+        const defence = ATTACK[getRandom(2)];
 
         return {
             value: getRandom(HIT[hit]),
@@ -166,6 +172,8 @@ class Game {
         } else if (this.player2.hp === 0 && this.player2.hp === this.player1.hp) {
             this.$playersContainer.appendChild(this.playerWin())
         }
+        this.$randomButton.disabled = true;
+        this.createReloadButton();
     }
 
     // $randomButtonAction() {
@@ -209,7 +217,7 @@ class Game {
 let scorpionData = {
     player: 1,
     name: "SCORPION",
-    hp: 100,
+    hp: 10,
     img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
     weapon: ["HOOK"]
 }
@@ -217,7 +225,7 @@ let scorpionData = {
 let subzeroData = {
     player: 2,
     name: "SUB-ZERO",
-    hp: 100,
+    hp: 10,
     img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
     weapon: ["SWORD"]
 }
