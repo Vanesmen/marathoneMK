@@ -66,6 +66,8 @@ class Game {
             case "draw":
                 text = `${logs[type]}`
                 break;
+            default:
+                break;
         };
 
         const el = `<p>${text}</p>`;
