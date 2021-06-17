@@ -7,6 +7,7 @@ export default class Player {
         this.hp = hp;
         this.img = img;
         this.weapon = weapon;
+        this.selector = `.player${this.player}`;
     }
 
     changeHP(hp) {
@@ -18,7 +19,7 @@ export default class Player {
     };
 
     elHP() {
-        return document.querySelector(`.player${this.player} .life`)
+        return document.querySelector(`${this.selector} .life`)
     };
 
     renderHP() {
