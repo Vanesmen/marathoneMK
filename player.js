@@ -1,12 +1,12 @@
-import { createElement, getRandom } from "./utils.js";
+import { createElement } from "./utils.js";
 
 export default class Player {
-    constructor(characterData) {
-        this.player = characterData.player;
-        this.name = characterData.name;
-        this.hp = characterData.hp;
-        this.img = characterData.img;
-        this.weapon = characterData.weapon;
+    constructor({ player, name, hp, img, weapon }) {
+        this.player = player;
+        this.name = name;
+        this.hp = hp;
+        this.img = img;
+        this.weapon = weapon;
     }
 
     changeHP(hp) {
