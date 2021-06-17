@@ -1,6 +1,6 @@
 import { createElement, getRandom } from "./utils.js";
 import Player from "./player.js";
-import { HIT, ATTACK, logs } from "./data.js";
+import { HIT, ATTACK, LOGS } from "./data.js";
 
 export class Game {
     constructor(player1Data, player2Data) {
@@ -52,19 +52,19 @@ export class Game {
         let text;
         switch (type) {
             case "start":
-                text = `${logs[type].replace("[player1]", name1).replace("[player2]", name2).replace("[time]", currentTime)}`;
+                text = `${LOGS[type].replace("[player1]", name1).replace("[player2]", name2).replace("[time]", currentTime)}`;
                 break;
             case "end":
-                text = `${logs[type][getRandom(logs[type].length)].replace("[playerWins]", name1).replace("[playerLose]", name2)}`
+                text = `${LOGS[type][getRandom(LOGS[type].length)].replace("[playerWins]", name1).replace("[playerLose]", name2)}`
                 break;
             case "hit":
-                text = `${currentTime} - ${logs[type][getRandom(logs[type].length)].replace("[playerKick]", name1).replace("[playerDefence]", name2)} -${damage} [${hp2}/100]`;
+                text = `${currentTime} - ${LOGS[type][getRandom(LOGS[type].length)].replace("[playerKick]", name1).replace("[playerDefence]", name2)} -${damage} [${hp2}/100]`;
                 break;
             case "defence":
-                text = `${currentTime} - ${logs[type][getRandom(logs[type].length)].replace("[playerKick]", name1).replace("[playerDefence]", name2)}`;
+                text = `${currentTime} - ${LOGS[type][getRandom(LOGS[type].length)].replace("[playerKick]", name1).replace("[playerDefence]", name2)}`;
                 break;
             case "draw":
-                text = `${logs[type]}`
+                text = `${LOGS[type]}`
                 break;
             default:
                 break;
